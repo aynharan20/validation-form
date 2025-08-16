@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Validation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <form id="myForm" class="bg-white p-6 rounded shadow-lg w-full max-w-md space-y-4">
+    <h2 class="text-2xl font-bold text-center text-blue-600">Register</h2>
+
+    <div>
+      <label class="block font-medium">Name</label>
+      <input type="text" id="name" class="w-full p-2 border rounded" />
+      <p id="nameError" class="text-red-500 text-sm mt-1 hidden">Please enter a valid name (only letters).</p>
+    </div>
+
+    <div>
+      <label class="block font-medium">Email</label>
+      <input type="text" id="email" class="w-full p-2 border rounded" />
+      <p id="emailError" class="text-red-500 text-sm mt-1 hidden">Please enter a valid email address.</p>
+    </div>
+
+    <div>
+      <label class="block font-medium">Phone</label>
+      <input type="text" id="phone" class="w-full p-2 border rounded" />
+      <p id="phoneError" class="text-red-500 text-sm mt-1 hidden">Please enter a valid 10-digit phone number.</p>
+    </div>
+
+    <div>
+      <label class="block font-medium">Password</label>
+      <input type="password" id="password" class="w-full p-2 border rounded" />
+      <p id="passwordError" class="text-red-500 text-sm mt-1 hidden">
+        Password must be at least 6 characters and contain a number.
+      </p>
+    </div>
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
+      Submit
+    </button>
+  </form>
+
+  <script>
+    const form = document.getElementById('myForm');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const phoneError = document.getElementById('phoneError');
+      const passwordError = document.getElementById('passwordError');
+
+      const nameRegex = /^[A-Za-z\s]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^\d{10}$/;
+      const passwordRegex = /^(?=.*[0-9]).{6,}$/;
+
+      let isValid = true;
+
+      if (!nameRegex.test(name)) {
+        nameError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        nameError.classList.add('hidden');
+      }
+
+      if (!emailRegex.test(email)) {
+        emailError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        emailError.classList.add('hidden');
+      }
+
+      if (!phoneRegex.test(phone)) {
+        phoneError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        phoneError.classList.add('hidden');
+      }
+
+      if (!passwordRegex.test(password)) {
+        passwordError.classList.remove('hidden');
+        isValid = false;
+      } else {
+        passwordError.classList.add('hidden');
+      }
+
+      if (isValid) {
+        alert("Form submitted successfully!");
+        form.reset();
+      }
+    });
+  </script>
+
+</body>
+</html>
